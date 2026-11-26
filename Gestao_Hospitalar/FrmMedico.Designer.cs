@@ -56,6 +56,7 @@
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnPesqInd = new System.Windows.Forms.Button();
             this.btnIncluir = new System.Windows.Forms.Button();
+            this.btnAtualizar = new System.Windows.Forms.Button();
             this.dtpNascMed = new System.Windows.Forms.DateTimePicker();
             this.DataGridMedico = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
@@ -226,6 +227,7 @@
             // txtCRMmed
             // 
             this.txtCRMmed.Location = new System.Drawing.Point(65, 58);
+            this.txtCRMmed.MaxLength = 6;
             this.txtCRMmed.Name = "txtCRMmed";
             this.txtCRMmed.Size = new System.Drawing.Size(100, 20);
             this.txtCRMmed.TabIndex = 27;
@@ -234,6 +236,7 @@
             // txtNomeMed
             // 
             this.txtNomeMed.Location = new System.Drawing.Point(252, 58);
+            this.txtNomeMed.MaxLength = 50;
             this.txtNomeMed.Name = "txtNomeMed";
             this.txtNomeMed.Size = new System.Drawing.Size(151, 20);
             this.txtNomeMed.TabIndex = 28;
@@ -250,6 +253,7 @@
             // txtCelularMed
             // 
             this.txtCelularMed.Location = new System.Drawing.Point(127, 132);
+            this.txtCelularMed.MaxLength = 30;
             this.txtCelularMed.Name = "txtCelularMed";
             this.txtCelularMed.Size = new System.Drawing.Size(151, 20);
             this.txtCelularMed.TabIndex = 30;
@@ -257,6 +261,7 @@
             // txtEmailMed
             // 
             this.txtEmailMed.Location = new System.Drawing.Point(127, 170);
+            this.txtEmailMed.MaxLength = 255;
             this.txtEmailMed.Name = "txtEmailMed";
             this.txtEmailMed.Size = new System.Drawing.Size(151, 20);
             this.txtEmailMed.TabIndex = 31;
@@ -269,6 +274,7 @@
             this.btnPesqGeral.TabIndex = 45;
             this.btnPesqGeral.Text = "Pesquisa Geral";
             this.btnPesqGeral.UseVisualStyleBackColor = true;
+            this.btnPesqGeral.Click += new System.EventHandler(this.btnPesqGeral_Click);
             // 
             // btnExcluir
             // 
@@ -278,6 +284,7 @@
             this.btnExcluir.TabIndex = 44;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
             // btnPesqInd
             // 
@@ -287,6 +294,7 @@
             this.btnPesqInd.TabIndex = 43;
             this.btnPesqInd.Text = "Pesquisa Individual";
             this.btnPesqInd.UseVisualStyleBackColor = true;
+            this.btnPesqInd.Click += new System.EventHandler(this.btnPesqInd_Click);
             // 
             // btnIncluir
             // 
@@ -298,6 +306,17 @@
             this.btnIncluir.UseVisualStyleBackColor = true;
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
+            // btnAtualizar
+            //
+            this.btnAtualizar.Enabled = false;
+            this.btnAtualizar.Location = new System.Drawing.Point(16, 350);
+            this.btnAtualizar.Name = "btnAtualizar";
+            this.btnAtualizar.Size = new System.Drawing.Size(149, 47);
+            this.btnAtualizar.TabIndex = 48;
+            this.btnAtualizar.Text = "Atualizar";
+            this.btnAtualizar.UseVisualStyleBackColor = true;
+            this.btnAtualizar.Click += new System.EventHandler(this.btnAtualizar_Click);
+            //
             // dtpNascMed
             // 
             this.dtpNascMed.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
@@ -310,6 +329,9 @@
             // 
             this.DataGridMedico.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridMedico.Location = new System.Drawing.Point(402, 194);
+            this.DataGridMedico.AllowUserToAddRows = false;
+            this.DataGridMedico.AllowUserToDeleteRows = false;
+            this.DataGridMedico.ReadOnly = true;
             this.DataGridMedico.Name = "DataGridMedico";
             this.DataGridMedico.Size = new System.Drawing.Size(240, 150);
             this.DataGridMedico.TabIndex = 47;
@@ -325,6 +347,7 @@
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnPesqInd);
             this.Controls.Add(this.btnIncluir);
+            this.Controls.Add(this.btnAtualizar);
             this.Controls.Add(this.txtEmailMed);
             this.Controls.Add(this.txtCelularMed);
             this.Controls.Add(this.cboEspecMed);
@@ -378,6 +401,7 @@
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnPesqInd;
         private System.Windows.Forms.Button btnIncluir;
+        private System.Windows.Forms.Button btnAtualizar;
         private System.Windows.Forms.DateTimePicker dtpNascMed;
         private System.Windows.Forms.DataGridView DataGridMedico;
     }
