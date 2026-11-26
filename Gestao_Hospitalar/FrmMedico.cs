@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
+//GABRIEL MENEZES SOUSA
+//CODIGO INICIADO 24/11
+
+//ULTIMA ATUALIZAÇÃO 26/11 18:00
 namespace Gestao_Hospitalar
 {
     public partial class FrmMedico : Form
@@ -19,75 +23,7 @@ namespace Gestao_Hospitalar
         public FrmMedico()
         {
             InitializeComponent();            
-        }
-
-        private void FrmMedico_Load(object sender, EventArgs e)
-        {
-            DataGridMedico.Visible = false;
-            //adicionando itens no combo box
-            cboEspecMed.Items.Add("Selecione uma Especialidade...");
-            cboEspecMed.Items.Add("Pediatria");
-            cboEspecMed.Items.Add("Cardiologia");
-            cboEspecMed.Items.Add("Ortopedia");
-            cboEspecMed.Items.Add("Oftalmologia");
-        }
-        private void LimparCampos()
-        {
-            txtCRMmed.Clear();            
-            txtEmailMed.Clear();
-            txtNomeMed.Clear();
-            txtCelularMed.Clear();
-            dtpNascMed.Value = DateTime.Now;
-            cboEspecMed.SelectedValue = null;
-        }
-        //buscar no banco o CRM do medico
-        private void txtCRMmed_TextChanged(object sender, EventArgs e)
-        {
-            if(string.IsNullOrWhiteSpace(txtCRMmed.Text))
-            {
-                LimparCampos();
-                return;
-            }
-            try
-            {
-                //query no sql
-                CmdSql.Clear();
-                CmdSql.Append("SELECT * FROM Medico ");
-                CmdSql.Append("WHERE crmMedico = @crmMedico");
-
-                //colocando os paramentros
-                Conexao.Cmd.Parameters.Clear();
-                Conexao.Cmd.Parameters.AddWithValue("@crmMedico", txtCRMmed);
-
-                Conexao.StrSql = CmdSql.ToString();
-
-                DataSet DS = Conexao.RetornarDataSet();
-
-                if (DS.Tables[0].Rows.Count > 0)
-                {
-                    DataRow row = DS.Tables[0].Rows[0];
-                    txtCelularMed.Text = row["celularMedico"].ToString();
-                    txtEmailMed.Text = row["emailMedico"].ToString();
-                    txtNomeMed.Text = row["nomeMedico"].ToString();
-                    cboEspecMed.Text = row["especialidade"].ToString();
-
-
-                    if (row["nascMedico"] != DBNull.Value)
-                    {
-                        dtpNascMed.Value = Convert.ToDateTime(row["nascMedico"]);
-                    }
-                }
-
-                else
-                {                    
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
-            }
-        }
+        }       
 
         //EVENTOS DE CLICK MENU
         //EVENTO FRM AGENDAMENTO  
@@ -122,17 +58,230 @@ namespace Gestao_Hospitalar
             Hide();
         }
 
+        private void FrmMedico_Load(object sender, EventArgs e)
+        {
+            DataGridMedico.Visible = false;
+            //adicionando itens no combo box
+            cboEspecMed.Items.Add("Selecione uma Especialidade...");
+            cboEspecMed.Items.Add("Pediatria");
+            cboEspecMed.Items.Add("Cardiologia");
+            cboEspecMed.Items.Add("Ortopedia");
+            cboEspecMed.Items.Add("Oftalmologia");
+
+            dtpNascMed.MinDate = new DateTime(1920, 1, 1);
+            dtpNascMed.MaxDate = DateTime.Today;
+        }
+        private void VoltaTamanho()
+        {
+            //FUNÇÃO 1 -- Ajuste de tamanho da tela
+            //tamamnho inicial do sistema -- Aumenta só no clique do grid
+            Height = 489;
+            Width = 450;
+
+            //DataGridMedico = 
+        }
+        private void LimparCampos()
+        {
+            //função 2 --limpeza de campos
+            txtCRMmed.Clear();
+            txtEmailMed.Clear();
+            txtNomeMed.Clear();
+            txtCelularMed.Clear();
+            dtpNascMed.Value = DateTime.Today;
+            cboEspecMed.SelectedIndex = 0;
+            txtCRMmed.Focus();
+        }
+
+        private bool ValidarCampos()
+        {
+            //funçao 3 -- validações de campos vazios
+            if (string.IsNullOrWhiteSpace(txtCRMmed.Text) ||
+                string.IsNullOrWhiteSpace(txtNomeMed.Text) ||
+                cboEspecMed.SelectedIndex <= 0 ||
+                string.IsNullOrWhiteSpace(txtCelularMed.Text) ||
+                string.IsNullOrWhiteSpace(txtEmailMed.Text))
+            {
+                MessageBox.Show("Preencha todos os campos obrigatórios (CRM, Nome, Especialidade, Celular e E-mail).");
+                return false;
+            }
+            return true;
+        }
+
+        private void PreencherParametros()
+        {
+            // função 4 -- Parametros
+            Conexao.Cmd.Parameters.Clear(); //limpeza de parametros anteriores
+            Conexao.Cmd.Parameters.AddWithValue("@crmMedico", txtCRMmed.Text.Trim()); // trim: apaga os espaços do codigo
+            Conexao.Cmd.Parameters.AddWithValue("@nomeMedico", txtNomeMed.Text.Trim()); // no caso de nome, ele nao mexe com espaços no meio
+            Conexao.Cmd.Parameters.AddWithValue("@especialidade", cboEspecMed.Text);
+            Conexao.Cmd.Parameters.AddWithValue("@celularMedico", txtCelularMed.Text.Trim());
+            Conexao.Cmd.Parameters.AddWithValue("@emailMedico", txtEmailMed.Text.Trim());
+            Conexao.Cmd.Parameters.AddWithValue("@nascMedico", dtpNascMed.Value.ToString("yyyy-MM-dd")); //padronizando as datas com mySql
+        }
+        
+        //EVENTOS DE CLICK - BOTOES
         //QUERY INSERT
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            //validação
+            if (!ValidarCampos()) return;
+
             try
             {
-                
+                CmdSql.Clear();
+                CmdSql.Append("INSERT INTO Medico (crmMedico, nomeMedico, especialidade, celularMedico, emailMedico, nascMedico) ");
+                CmdSql.Append("VALUES (@crmMedico, @nomeMedico, @especialidade, @celularMedico, @emailMedico, @nascMedico)");
+
+                PreencherParametros();
+                Conexao.StrSql = CmdSql.ToString();                
+                Conexao.ExecutarCmd();
+
+                MessageBox.Show("Médico cadastrado com sucesso!");
+
+                LimparCampos();
+                VoltaTamanho();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao salvar: " + ex.Message);
+                //CHECA A MENSAGEM DE ERRO PARA INDICAR PRO USUARIO
+                if (ex.Message.Contains("Duplicate entry"))
+                    MessageBox.Show("Já existe um medico cadastrado com este CRM!");
+                else
+                    MessageBox.Show("Erro ao salvar: " + ex.Message);
+            }            
+        }
+
+        //QUERY DELETE
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            //validação
+            if (string.IsNullOrWhiteSpace(txtCRMmed.Text))
+            {
+                MessageBox.Show("Informe o CRM do médico que deseja excluir.");
+                return;
             }
-        }              
+            // danger zone -- confirmação do usuario
+            if (MessageBox.Show("Deseja realmente excluir este médico?", "Confirmação",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                CmdSql.Clear();
+                CmdSql.Append("DELETE FROM Medico WHERE crmMedico = @crmMedico");
+
+                Conexao.Cmd.Parameters.Clear();
+                Conexao.Cmd.Parameters.AddWithValue("@crmMedico", txtCRMmed.Text.Trim());
+
+                Conexao.StrSql = CmdSql.ToString();
+                int LinhasAfetadas = Conexao.ExecutarCmd();
+
+                if (LinhasAfetadas > 0)
+                {
+                    MessageBox.Show("Médico excluído com sucesso!");
+                    LimparCampos();                    
+                }
+                else
+                {
+                    MessageBox.Show("Nenhum médico encontrado com esse CRM.");
+                }
+
+                VoltaTamanho();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("foreign key constraint"))
+                    MessageBox.Show("Não é possível excluir: este médico já possui agendamentos ou atendimentos registrados.");
+
+                else
+                    MessageBox.Show("Erro ao excluir: " + ex.Message);
+            }        
+        }
+        //evento para carregar os medicos no grid
+        private void ChamarGrid()
+        {
+            try
+            {
+                CmdSql.Clear();
+                CmdSql.Append("SELECT * FROM Medico ");
+                CmdSql.Append("ORDER BY nomeMedico");
+
+                Conexao.Cmd.Parameters.Clear();
+                Conexao.StrSql = CmdSql.ToString();
+
+                DataSet DS = Conexao.RetornarDataSet();
+
+                DataGridMedico.Visible = true;
+                DataGridMedico.DataSource = DS.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar médicos: " + ex.Message);
+            }
+        }
+
+        //botao select individual
+        private void btnPesqInd_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCRMmed.Text))
+            {
+                MessageBox.Show("Digite o CRM para pesquisar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCRMmed.Focus();
+                return;
+            }
+
+            try
+            {
+                CmdSql.Clear();
+                CmdSql.Append("SELECT * FROM Medico ");
+                CmdSql.Append("WHERE crmMedico = @crmMedico");
+
+                Conexao.Cmd.Parameters.Clear();
+                Conexao.Cmd.Parameters.AddWithValue("@crmMedico", txtCRMmed.Text.Trim());
+
+                Conexao.StrSql = CmdSql.ToString();
+
+                DataSet DS = Conexao.RetornarDataSet();
+
+                if (DS.Tables[0].Rows.Count > 0)
+                {
+                    DataRow row = DS.Tables[0].Rows[0];
+                    txtNomeMed.Text = row["nomeMedico"].ToString();
+                    cboEspecMed.Text = row["especialidade"].ToString();
+                    txtCelularMed.Text = row["celularMedico"].ToString();
+                    txtEmailMed.Text = row["emailMedico"].ToString();
+
+                    if (row["nascMedico"] != DBNull.Value)
+                    {
+                        dtpNascMed.Value = Convert.ToDateTime(row["nascMedico"]);
+                    }
+
+                    DataGridMedico.Visible = true;
+                    DataGridMedico.DataSource = DS.Tables[0];
+                    Height = 489;
+                    Width = 918;
+                }
+                else
+                {
+                    MessageBox.Show("Médico não localizado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LimparCampos();
+                    ChamarGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
+        }
+
+        //botao pesquisa geral
+        private void btnPesqGeral_Click(object sender, EventArgs e)
+        {
+            ChamarGrid();
+
+            Height = 489;
+            Width = 918;
+        }
     }
 }
