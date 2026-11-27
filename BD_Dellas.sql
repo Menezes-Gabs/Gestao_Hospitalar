@@ -7,8 +7,8 @@ create table if not exists Medico
  crmMedico char (6) unique not null,
  nomeMedico varchar (50) not null,
  especialidade varchar (50) not null,
- celularMedico varchar (30) not null,
- emailMedico varchar (255) not null,
+ celularMedico varchar (11) not null, //padronizado no codigo do formulario
+ emailMedico varchar (150) not null,
  nascMedico date not null
 ) Engine = "InnoDB";
 
