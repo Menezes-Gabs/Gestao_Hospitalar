@@ -56,7 +56,6 @@
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnPesqInd = new System.Windows.Forms.Button();
             this.btnIncluir = new System.Windows.Forms.Button();
-            this.btnAtualizar = new System.Windows.Forms.Button();
             this.dtpNascMed = new System.Windows.Forms.DateTimePicker();
             this.DataGridMedico = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -232,7 +231,6 @@
             this.txtCRMmed.Name = "txtCRMmed";
             this.txtCRMmed.Size = new System.Drawing.Size(100, 20);
             this.txtCRMmed.TabIndex = 27;
-            this.txtCRMmed.TextChanged += new System.EventHandler(this.txtCRMmed_TextChanged);
             // 
             // txtNomeMed
             // 
@@ -255,7 +253,7 @@
             // txtCelularMed
             // 
             this.txtCelularMed.Location = new System.Drawing.Point(127, 132);
-            this.txtCelularMed.MaxLength = 11;
+            this.txtCelularMed.MaxLength = 30;
             this.txtCelularMed.Name = "txtCelularMed";
             this.txtCelularMed.Size = new System.Drawing.Size(151, 20);
             this.txtCelularMed.TabIndex = 30;
@@ -263,7 +261,7 @@
             // txtEmailMed
             // 
             this.txtEmailMed.Location = new System.Drawing.Point(127, 170);
-            this.txtEmailMed.MaxLength = 150;
+            this.txtEmailMed.MaxLength = 255;
             this.txtEmailMed.Name = "txtEmailMed";
             this.txtEmailMed.Size = new System.Drawing.Size(184, 20);
             this.txtEmailMed.TabIndex = 31;
@@ -308,17 +306,6 @@
             this.btnIncluir.UseVisualStyleBackColor = true;
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
-            // btnAtualizar
-            //
-            this.btnAtualizar.Enabled = false;
-            this.btnAtualizar.Location = new System.Drawing.Point(16, 350);
-            this.btnAtualizar.Name = "btnAtualizar";
-            this.btnAtualizar.Size = new System.Drawing.Size(149, 47);
-            this.btnAtualizar.TabIndex = 48;
-            this.btnAtualizar.Text = "Atualizar";
-            this.btnAtualizar.UseVisualStyleBackColor = true;
-            this.btnAtualizar.Click += new System.EventHandler(this.btnAtualizar_Click);
-            //
             // dtpNascMed
             // 
             this.dtpNascMed.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -359,7 +346,6 @@
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnPesqInd);
             this.Controls.Add(this.btnIncluir);
-            this.Controls.Add(this.btnAtualizar);
             this.Controls.Add(this.txtEmailMed);
             this.Controls.Add(this.txtCelularMed);
             this.Controls.Add(this.cboEspecMed);
@@ -413,7 +399,6 @@
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnPesqInd;
         private System.Windows.Forms.Button btnIncluir;
-        private System.Windows.Forms.Button btnAtualizar;
         private System.Windows.Forms.DateTimePicker dtpNascMed;
         private System.Windows.Forms.DataGridView DataGridMedico;
         private System.Windows.Forms.Label label1;

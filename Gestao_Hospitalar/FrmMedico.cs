@@ -20,7 +20,6 @@ namespace Gestao_Hospitalar
     {
         ClsConexao Conexao = new ClsConexao();
         StringBuilder CmdSql = new StringBuilder();
-        private int? idMedicoSelecionado;
         public FrmMedico()
         {
             InitializeComponent();            
@@ -62,7 +61,6 @@ namespace Gestao_Hospitalar
         private void FrmMedico_Load(object sender, EventArgs e)
         {
             DataGridMedico.Visible = false;
-            btnAtualizar.Enabled = false;
             //adicionando itens no combo box
             cboEspecMed.Items.Add("Selecione uma Especialidade...");
             cboEspecMed.Items.Add("Pediatria");
@@ -85,8 +83,6 @@ namespace Gestao_Hospitalar
         private void LimparCampos()
         {
             //função 2 --limpeza de campos
-            idMedicoSelecionado = null;
-            btnAtualizar.Enabled = false;
             txtCRMmed.Clear();
             txtEmailMed.Clear();
             txtNomeMed.Clear();
@@ -108,40 +104,7 @@ namespace Gestao_Hospitalar
                 MessageBox.Show("Preencha todos os campos obrigatórios (CRM, Nome, Especialidade, Celular e E-mail).");
                 return false;
             }
-            if (txtCRMmed.Text.Trim().Length > 6 || txtNomeMed.Text.Trim().Length > 50 ||
-                txtCelularMed.Text.Trim().Length != 11 || !txtCelularMed.Text.Trim().All(char.IsDigit) ||
-                txtEmailMed.Text.Trim().Length > 150)
-            {
-                MessageBox.Show("Confira o CRM, nome, celular (11 dígitos) e e-mail.");
-                return false;
-            }
             return true;
-        }
-
-        private void txtCRMmed_TextChanged(object sender, EventArgs e)
-        {
-            idMedicoSelecionado = null;
-            btnAtualizar.Enabled = false;
-        }
-
-        private void btnAtualizar_Click(object sender, EventArgs e)
-        {
-            if (!idMedicoSelecionado.HasValue || !ValidarCampos()) return;
-            try
-            {
-                PreencherParametros();
-                Conexao.Cmd.Parameters.AddWithValue("@id", idMedicoSelecionado.Value);
-                Conexao.StrSql = "UPDATE Medico SET nomeMedico=@nomeMedico, especialidade=@especialidade, celularMedico=@celularMedico, emailMedico=@emailMedico, nascMedico=@nascMedico WHERE idMedico=@id AND crmMedico=@crmMedico";
-                int linhas = Conexao.ExecutarCmd();
-                MessageBox.Show(linhas > 0 ? "Médico atualizado com sucesso!" : "Nenhuma alteração registrada.");
-                ChamarGrid();
-                Height = 489;
-                Width = 918;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao atualizar: " + ex.Message);
-            }
         }
 
         private void PreencherParametros()
@@ -251,7 +214,6 @@ namespace Gestao_Hospitalar
 
                 DataGridMedico.Visible = true;
                 DataGridMedico.DataSource = DS.Tables[0];
-                DataGridMedico.Columns["idMedico"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -269,8 +231,6 @@ namespace Gestao_Hospitalar
                 return;
             }
 
-            idMedicoSelecionado = null;
-            btnAtualizar.Enabled = false;
             try
             {
                 CmdSql.Clear();
@@ -297,11 +257,8 @@ namespace Gestao_Hospitalar
                         dtpNascMed.Value = Convert.ToDateTime(row["nascMedico"]);
                     }
 
-                    idMedicoSelecionado = Convert.ToInt32(row["idMedico"]);
-                    btnAtualizar.Enabled = true;
                     DataGridMedico.Visible = true;
                     DataGridMedico.DataSource = DS.Tables[0];
-                    DataGridMedico.Columns["idMedico"].Visible = false;
                     Height = 489;
                     Width = 918;
                 }
