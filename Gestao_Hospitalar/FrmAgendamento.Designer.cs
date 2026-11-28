@@ -71,7 +71,7 @@
             this.MenuTSM});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(444, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(448, 28);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -91,25 +91,25 @@
             // AgendamentoTSM
             // 
             this.AgendamentoTSM.Name = "AgendamentoTSM";
-            this.AgendamentoTSM.Size = new System.Drawing.Size(180, 24);
+            this.AgendamentoTSM.Size = new System.Drawing.Size(173, 24);
             this.AgendamentoTSM.Text = "Agendamento";
             // 
             // MedicoTSM
             // 
             this.MedicoTSM.Name = "MedicoTSM";
-            this.MedicoTSM.Size = new System.Drawing.Size(180, 24);
+            this.MedicoTSM.Size = new System.Drawing.Size(173, 24);
             this.MedicoTSM.Text = "Médico";
             // 
             // PacienteTSM
             // 
             this.PacienteTSM.Name = "PacienteTSM";
-            this.PacienteTSM.Size = new System.Drawing.Size(180, 24);
+            this.PacienteTSM.Size = new System.Drawing.Size(173, 24);
             this.PacienteTSM.Text = "Paciente";
             // 
             // atendimentoTSM
             // 
             this.atendimentoTSM.Name = "atendimentoTSM";
-            this.atendimentoTSM.Size = new System.Drawing.Size(180, 24);
+            this.atendimentoTSM.Size = new System.Drawing.Size(173, 24);
             this.atendimentoTSM.Text = "Atendimento";
             // 
             // listagensToolStripMenuItem
@@ -122,7 +122,7 @@
             this.listagemPorEspecialidadeMédicaToolStripMenuItem,
             this.quantidadeAtendimentoPorMêsToolStripMenuItem});
             this.listagensToolStripMenuItem.Name = "listagensToolStripMenuItem";
-            this.listagensToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.listagensToolStripMenuItem.Size = new System.Drawing.Size(173, 24);
             this.listagensToolStripMenuItem.Text = "Listagens";
             // 
             // médicoToolStripMenuItem1
@@ -224,6 +224,7 @@
             this.txtCRM.Name = "txtCRM";
             this.txtCRM.Size = new System.Drawing.Size(100, 20);
             this.txtCRM.TabIndex = 27;
+            this.txtCRM.Leave += new System.EventHandler(this.txtCRM_Leave);
             // 
             // txtCPF
             // 
@@ -273,9 +274,11 @@
             // 
             // HorarioAgend
             // 
-            this.HorarioAgend.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.HorarioAgend.CustomFormat = "HH:mm";
+            this.HorarioAgend.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.HorarioAgend.Location = new System.Drawing.Point(294, 155);
             this.HorarioAgend.Name = "HorarioAgend";
+            this.HorarioAgend.ShowUpDown = true;
             this.HorarioAgend.Size = new System.Drawing.Size(76, 20);
             this.HorarioAgend.TabIndex = 34;
             // 
@@ -313,6 +316,7 @@
             this.btnIncluir.TabIndex = 38;
             this.btnIncluir.Text = "Incluir";
             this.btnIncluir.UseVisualStyleBackColor = true;
+            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // btnPesqInd
             // 
@@ -345,7 +349,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 450);
+            this.ClientSize = new System.Drawing.Size(448, 450);
             this.Controls.Add(this.btnPesqGeral);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnPesqInd);
