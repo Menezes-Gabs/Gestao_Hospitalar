@@ -61,7 +61,9 @@
             this.btnPesqInd = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnPesqGeral = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -71,7 +73,7 @@
             this.MenuTSM});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(448, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(678, 28);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -345,11 +347,20 @@
             this.btnPesqGeral.Text = "Pesquisa Geral";
             this.btnPesqGeral.UseVisualStyleBackColor = true;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(417, 46);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 381);
+            this.dataGridView1.TabIndex = 42;
+            // 
             // FrmAgendamento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 450);
+            this.ClientSize = new System.Drawing.Size(678, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnPesqGeral);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnPesqInd);
@@ -375,6 +386,7 @@
             this.Text = "AGENDAMENTO MEDICO";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,5 +427,6 @@
         private System.Windows.Forms.Button btnPesqInd;
         private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnPesqGeral;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
