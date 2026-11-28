@@ -113,7 +113,7 @@ namespace Gestao_Hospitalar
                 return false;
             }
             //tamanhos verificados no codigo e propriedades
-            else if (txtCelularMed.Text.Length > 11 || txtCRMmed.Text.Length > 6 || txtEmailMed.Text.Length > 150 || txtNomeMed.Text.Length > 50)
+            else if (!txtCelularMed.MaskCompleted || txtCRMmed.Text.Length > 6 || txtEmailMed.Text.Length > 150 || txtNomeMed.Text.Length > 50)
             {
                 MessageBox.Show("Os campos excedem o limite do banco");
                 return false;
